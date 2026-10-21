@@ -1,8 +1,18 @@
 package com.felipysantsss.samara.entities.enums;
 
-// em processo
-// falta analisar se enums serão a melhor opção para isso.
+import java.util.List;
+
 public enum ShellCommands {
-    LISTAR_ARQUIVOS,
-    ADENTRAR_PASTA;
+    SHOW_FILES(List.of("ls", "-la")),
+    ENTER_FOLDER(List.of("cd"));
+
+    private List<String> command;
+
+    ShellCommands(List<String> command) {
+        this.command = command;
+    }
+
+    public List<String> getCommand() {
+        return command;
+    }
 }
