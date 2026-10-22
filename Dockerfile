@@ -1,14 +1,15 @@
-FROM eclipse-temurin:21-jdk AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
-COPY src/ ./src/
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-RUN find src -type f -name "*.java" > sources.txt \
-    && javac -d out @sources.txt
+COPY src ./src
+RUN mvn package -DskipTests
 
 FROM eclipse-temurin:21-jre
+
 WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
-COPY --from=build /app/out/ ./out/
-
-CMD ["java", "-cp", "out", "com.felipysantsss.samara.Main"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
