@@ -1,13 +1,12 @@
 package com.felipysantsss.samara.services;
 
-import com.felipysantsss.samara.entities.enums.ShellCommands;
-
 import java.io.IOException;
+import java.util.List;
 
 public class CommandExecuter {
-    public static void executerSolo(ShellCommands command){
+    public static List<String> executer(List<String> command){
         try {
-            ProcessBuilder pb = new ProcessBuilder(command.getCommand());
+            ProcessBuilder pb = new ProcessBuilder(command);
             pb.inheritIO();
             Process process = pb.start();
 
